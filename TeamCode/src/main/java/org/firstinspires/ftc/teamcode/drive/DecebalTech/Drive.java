@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive.DecebalTech;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -32,7 +33,8 @@ public class Drive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
+        PhotonCore.experimental.setSinglethreadedOptimized(true);
+        PhotonCore.enable();
 
 
         drive = new SampleMecanumDrive(hardwareMap);
