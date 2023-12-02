@@ -184,37 +184,6 @@ public class ModelAutonomus extends LinearOpMode {
 
 
 
-        drive.followTrajectorySequence(pune_preload);
-
-
-
-        
-//        if(tagOfInterest == null){
-//
-//
-//        }else{
-//            switch(tagOfInterest.id){
-//                case 1:
-//
-//
-//
-//
-//                    break;
-//                case 2:
-//
-//
-//                    break;
-//                case 3:
-//
-//
-//
-//
-//                    break;
-//            }
-//        }
-
-        sleep(1000);
-
 
         telemetry.update();
 
