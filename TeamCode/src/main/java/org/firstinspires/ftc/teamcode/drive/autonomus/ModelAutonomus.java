@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.detection.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.drive.detection.DetectionPipeline;
+import org.firstinspires.ftc.teamcode.drive.detection.DetectionPipelineMatei;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.RobotUtils;
 import org.openftc.apriltag.AprilTagDetection;
@@ -26,51 +27,31 @@ import java.util.ArrayList;
 public class ModelAutonomus extends LinearOpMode {
     private RobotUtils robot;
     OpenCvCamera webcam;
-
-    DetectionPipeline detectionPipeline;
+    DetectionPipelineMatei detectionPipeline;
 
     boolean bCameraOpened = false;
     private SampleMecanumDrive drive;
 
-    static final double FEET_PER_METER = 3.28084;
-
-    // Lens intrinsics
-    // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
-    // You will need to do your own calibration for other configurations!
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
-
-    // UNITS ARE METERS
-    double tagsize = 0.166;
-
-    // Tag ID 1,2,3 from the 36h11 family
-    /*EDIT IF NEEDED!!!*/
-
-    int LEFT = 1;
-    int MIDDLE = 2;
-    int RIGHT = 3;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
-    AprilTagDetection tagOfInterest = null;
-
+    enum ZoneType{
+        RIGHT,
+        LEFT,
+        CENTER
+    }
+    ZoneType zone =  ZoneType.CENTER;
+    String Pozitie_Preload;
     @Override
     public void runOpMode() throws InterruptedException {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
-
-        detectionPipeline = new DetectionPipeline();
-
-
+        detectionPipeline = new DetectionPipelineMatei();
+        webcam.setPipeline(detectionPipeline);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
                 bCameraOpened = true;
-                webcam.startStreaming(640, 480, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -82,148 +63,39 @@ public class ModelAutonomus extends LinearOpMode {
 
 
 
-        drive = new SampleMecanumDrive(hardwareMap);
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
-        Pose2d startPose = new Pose2d(-64,35,Math.toRadians(0));
-        drive.setPoseEstimate(startPose);
-        TrajectorySequence pune_preload = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(-23,32,Math.toRadians(-90)),Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(55,Math.toRadians(45),10.3),
-                        SampleMecanumDrive.getAccelerationConstraint(55)
-                )
-
-
-                .build();
-
-
-
         sleep(2000);
-        detectionPipeline.setGridSize(10);
+        detectionPipeline.setGridSize(3);
 
+        while (!isStarted() && !isStopRequested()) {
+            double left_mean = (detectionPipeline.getZoneLuminosity(1)+detectionPipeline.getZoneLuminosity(2)+detectionPipeline.getZoneLuminosity(3))/3.0;
+            double center_mean = (detectionPipeline.getZoneLuminosity(4)+detectionPipeline.getZoneLuminosity(5)+detectionPipeline.getZoneLuminosity(6))/3.0;
+            double right_mean = (detectionPipeline.getZoneLuminosity(7)+detectionPipeline.getZoneLuminosity(8)+detectionPipeline.getZoneLuminosity(9))/3.0;
+            //TODO: codul comentat verifica doar zonele de pe mijlocul camerei, codul activ verifica valorile medii;
+//            if(detectionPipeline.getZoneLuminosity(2) > detectionPipeline.getZoneLuminosity(5) && detectionPipeline.getZoneLuminosity(2) > detectionPipeline.getZoneLuminosity(8))
+//               zone=ZoneType.LEFT;
+//            else if(detectionPipeline.getZoneLuminosity(5) > detectionPipeline.getZoneLuminosity(2) && detectionPipeline.getZoneLuminosity(5) > detectionPipeline.getZoneLuminosity(8))
+//               zone=ZoneType.CENTER;
+//            else if(detectionPipeline.getZoneLuminosity(8) > detectionPipeline.getZoneLuminosity(2) && detectionPipeline.getZoneLuminosity(8) > detectionPipeline.getZoneLuminosity(5))
+//               zone=ZoneType.RIGHT;
+            if (left_mean>center_mean && left_mean>right_mean) zone = ZoneType.LEFT;
+            else if (right_mean>center_mean && right_mean>left_mean) zone = ZoneType.RIGHT;
+            else if (center_mean>left_mean &&center_mean > right_mean) zone = ZoneType.CENTER;
 
-        /*
-         * The INIT-loop:
-         * This REPLACES waitForStart!
-         */
-        while (!isStarted() && !isStopRequested())
-        {
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-
-            if(currentDetections.size() != 0)
-            {
-                boolean tagFound = false;
-
-                for(AprilTagDetection tag : currentDetections)
-                {
-                    if(tag.id == LEFT || tag.id == MIDDLE || tag.id == RIGHT)
-                    {
-                        tagOfInterest = tag;
-                        tagFound = true;
-                        break;
-                    }
-                }
-
-                if(tagFound)
-                {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    tagToTelemetry(tagOfInterest);
-                }
-                else
-                {
-                    telemetry.addLine("Don't see tag of interest :(");
-
-                    if(tagOfInterest == null)
-                    {
-                        telemetry.addLine("(The tag has never been seen)");
-                    }
-                    else
-                    {
-                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                        tagToTelemetry(tagOfInterest);
-                    }
-                }
-
-            }
-            else
-            {
-                telemetry.addLine("Don't see tag of interest :(");
-
-                if(tagOfInterest == null)
-                {
-                    telemetry.addLine("(The tag has never been seen)");
-                }
-                else
-                {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                    tagToTelemetry(tagOfInterest);
-                }
-
-            }
-
-            telemetry.update();
-            sleep(20);
-        }
-
-        if(tagOfInterest != null)
-        {
-            telemetry.addLine("Tag snapshot:\n");
-            tagToTelemetry(tagOfInterest);
-            telemetry.update();
-        }
-        else
-        {
-            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.addData("zone = ",zone.toString());
+            telemetry.addData("luminosity zone 2",detectionPipeline.getZoneLuminosity(2));
+            telemetry.addData("luminosity zone 5",detectionPipeline.getZoneLuminosity(5));
+            telemetry.addData("luminosity zone 6",detectionPipeline.getZoneLuminosity(8));
+            telemetry.addData("left_mean ",left_mean);
+            telemetry.addData("center_mean",center_mean);
+            telemetry.addData("right_mean",right_mean);
             telemetry.update();
         }
 
-        //PUT AUTON CODE HERE (DRIVER PRESSED THE PLAY BUTTON!)
+        if (!opModeIsActive()) return;
 
-//        webcam.setPipeline(detectionPipeline);
-
-
-
-        drive.followTrajectorySequence(pune_preload);
-
-
-
-//        if(tagOfInterest == null){
-//
-//
-//        }else{
-//            switch(tagOfInterest.id){
-//                case 1:
-//
-//
-//
-//
-//                    break;
-//                case 2:
-//
-//
-//                    break;
-//                case 3:
-//
-//
-//
-//
-//                    break;
-//            }
-//        }
-
-        sleep(1000);
 
 
         telemetry.update();
 
     }
-
-    void tagToTelemetry(AprilTagDetection detection)
-    {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-    }
-
-
-
 }

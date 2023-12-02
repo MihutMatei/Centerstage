@@ -17,18 +17,12 @@ import org.firstinspires.ftc.teamcode.util.RobotUtils;
 
 public class debugging extends LinearOpMode {
 
-    private SampleMecanumDrive drive;
-    private RobotUtils robot;
-
+    private DcMotor start;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new RobotUtils(hardwareMap);
-
-        drive = new SampleMecanumDrive(hardwareMap);
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        start = hardwareMap.get(DcMotor.class,"1");
         waitForStart();
 
 
@@ -36,17 +30,8 @@ public class debugging extends LinearOpMode {
 
 
         while (opModeIsActive() && !isStopRequested()) {
-
-            drive.setWeightedDrivePower(
-                    new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
-                    )
-            );
-
-
-
+            start.setPower(1);
+            telemetry.addLine("what");
             telemetry.update();
         }
     }
