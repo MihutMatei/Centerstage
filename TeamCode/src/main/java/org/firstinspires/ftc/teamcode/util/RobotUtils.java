@@ -29,6 +29,7 @@ public class RobotUtils {
     public DcMotorEx motorIntake;
     public DcMotorEx sliderLeft;
     public DcMotorEx sliderRight;
+
     //-----------------------VALORI SI VARIABILE-------------------------
     public double cuva_score_pos=0;
     public double cuva_return_pos=0;
@@ -63,9 +64,11 @@ public class RobotUtils {
 
         axon_arm_left.setPwmEnable();
         axon_arm_right.setPwmEnable();
+        axon_rotire_cuva.setPwmEnable();
 
         axon_arm_left.setPwmRange(new PwmControl.PwmRange(500, 2500));
         axon_arm_right.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        axon_rotire_cuva.setPwmRange(new PwmControl.PwmRange(500, 2500));
     }
     public void setSliderPositions(int position)
     {
@@ -139,7 +142,6 @@ public class RobotUtils {
      * */
     public void pixel_drop_all(){
         pixel_servo.setPosition(pixel_drop_pos);
-
     }
     /**
      * ridica servoul care tine in loc pixelii pentru a permite intake-ul
