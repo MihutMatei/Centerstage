@@ -38,8 +38,6 @@ public class Drive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
-
         robot = new RobotUtils(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -146,11 +144,22 @@ public class Drive extends LinearOpMode {
                     }
                     break;
             }
+
+            if(robot.sliderRight.getCurrentPosition()>0 && robot.sliderRight.getCurrentPosition()<50) {
+                robot.cuva_return();
+                robot.arm_return();
+            }
+            if(robot.sliderRight.getCurrentPosition()>50 && robot.sliderRight.getCurrentPosition()<200) {
+                robot.cuva_clearance();
+                robot.arm_clearance();
+            }
+            if(robot.sliderRight.getCurrentPosition()>220 && robot.sliderRight.getCurrentPosition()<3000) {
+                robot.cuva_score();
+                robot.arm_extend();
+            }
+            if(gamepad2.square) robot.pixel_drop_one();
+
             
-
-
-
-
             drive.update();
 
         }

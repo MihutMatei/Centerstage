@@ -34,9 +34,11 @@ public class RobotUtils {
     //-----------------------VALORI SI VARIABILE-------------------------
     public double cuva_score_pos=0;
     public double cuva_return_pos=0;
+    public double cuva_clearance_pos=0;
 
     public double arm_up_pos=0.8;
     public double arm_down_pos=0.4;
+    public double arm_clearance_pos =0.3;
 
     public double drone_reset_pos=0;
     public double launch_pos=0;
@@ -120,6 +122,12 @@ public class RobotUtils {
         axon_rotire_cuva.setPosition(cuva_score_pos);
     }
     /**
+     * pune cuva in pozitia de clearance
+     * */
+    public void cuva_clearance(){
+        axon_rotire_cuva.setPosition(cuva_clearance_pos);
+    }
+    /**
      * pune cuva in pozitia in care trebuie sa fie pentru intake
      * */
     public void cuva_return(){
@@ -149,6 +157,7 @@ public class RobotUtils {
     /**
      * drop la toate pixels
      * */
+
     public void pixel_drop_all(){
         pixel_servo.setPosition(pixel_drop_pos);
     }
@@ -163,6 +172,13 @@ public class RobotUtils {
      * */
     public void arm_extend(){
         axon_arm_left.setPosition(arm_up_pos);
+        axon_arm_right.setPosition(arm_up_pos);
+    }
+    /**
+     * pune cu 2 axoane bratul pe care se afla cuva in pozitia de clearance
+     * */
+    public void arm_clearance(){
+        axon_arm_left.setPosition(arm_clearance_pos);
         axon_arm_right.setPosition(arm_up_pos);
     }
     /**
