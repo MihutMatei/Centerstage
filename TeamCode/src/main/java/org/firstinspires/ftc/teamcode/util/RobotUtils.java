@@ -85,6 +85,11 @@ public class RobotUtils {
 
         double absPower = Math.abs(power);
 
+        sliderRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sliderRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         int currentPos = sliderLeft.getCurrentPosition();
 
@@ -92,8 +97,7 @@ public class RobotUtils {
         setSliderPositions(position);
 
         // Set the run mode of both slider motors to RUN_TO_POSITION.
-        sliderLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        sliderRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
 
         if (currentPos > position) {

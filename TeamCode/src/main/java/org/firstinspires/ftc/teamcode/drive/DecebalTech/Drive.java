@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.DecebalTech;
 
+import android.transition.Slide;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,13 +18,17 @@ import org.firstinspires.ftc.teamcode.util.RobotUtils;
 
 public class Drive extends LinearOpMode {
 
-    
+    private RobotUtils robot;
     enum ChasisState{
         DRIVE,
         TURBO,
         PRECISION
     }
-
+    enum SliderState{
+        MANUAL,
+        AUTO
+    }
+    private SliderState sliderstate = SliderState.AUTO;
     private ChasisState chasisState = ChasisState.DRIVE;
 
     private SampleMecanumDrive drive;
@@ -34,25 +40,18 @@ public class Drive extends LinearOpMode {
 
 
 
-
+        robot = new RobotUtils(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
-
-
-
+        robot.sliderRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.sliderLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
-
 
         if (isStopRequested()) return;
 
         while (opModeIsActive() && !isStopRequested()) {
 
-
-
-
-
+            /*-------------P2 CONTROLS-------------------------------------*/
 
             switch (chasisState){
                 case DRIVE:
@@ -63,14 +62,12 @@ public class Drive extends LinearOpMode {
                                     -gamepad1.right_stick_x/1.5
                             )
                     );
-
                     if (gamepad1.right_trigger>0.3) {
-
                         chasisState = ChasisState.TURBO;
                     }
                     if (gamepad1.left_trigger>0.3) {
-
-                        chasisState = ChasisState.PRECISION;                    }
+                        chasisState = ChasisState.PRECISION;
+                    }
                     break;
                 case TURBO:
                     drive.setWeightedDrivePower(
@@ -80,9 +77,7 @@ public class Drive extends LinearOpMode {
                                     -gamepad1.right_stick_x
                             )
                     );
-
                     if (gamepad1.right_trigger==0) {
-
                         chasisState = ChasisState.DRIVE;
                     }
                     break;
@@ -94,16 +89,64 @@ public class Drive extends LinearOpMode {
                                     -gamepad1.right_stick_x/3
                             )
                     );
-
                     if (gamepad1.left_trigger==0) {
-
                         chasisState = ChasisState.DRIVE;
                     }
-
             }
+            if(gamepad1.triangle) robot.drone_launch();
+            if(gamepad1.start) robot.drone_reset();
+            if(gamepad1.dpad_up) robot.intake_on();
+            if(gamepad1.dpad_down) robot.intake_off();
+            if(gamepad1.dpad_left) robot.intake_reverse();
 
+            /*-------------P2 CONTROLS-------------------------------------*/
 
-
+            switch (sliderstate){
+                case AUTO:
+                    if(gamepad2.dpad_down) robot.go_sliders_down();
+                    if(gamepad2.dpad_up) robot.go_sliders_high();
+                    if(gamepad2.dpad_left) robot.go_sliders_mid();
+                    if(gamepad2.dpad_right) robot.go_sliders_low();
+                    if(gamepad2.triangle){
+                        robot.sliderRight.setPower(0);
+                        robot.sliderLeft.setPower(0);
+                        robot.sliderRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        robot.sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        sliderstate = SliderState.MANUAL;
+                    }
+                    break;
+                case MANUAL:
+                    if(gamepad2.left_stick_y>0.3){
+                        robot.sliderLeft.setPower(0.5);
+                        robot.sliderRight.setPower(-0.5);
+                    }
+                    if(gamepad2.left_stick_y<-0.3){
+                        robot.sliderLeft.setPower(-0.5);
+                        robot.sliderRight.setPower(0.5);
+                    }
+                    if(gamepad2.triangle){
+                        robot.sliderRight.setPower(0);
+                        robot.sliderLeft.setPower(0);
+                        //teoretic cele 2 lini de dedesubt sunt redundante petnru ca sunt
+                        //prezente si in RobotUtils in toate functiile de go to position
+                        robot.sliderRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        sliderstate = SliderState.AUTO;
+                    }
+                    if(gamepad2.right_stick_button){
+                        robot.sliderRight.setPower(0);
+                        robot.sliderLeft.setPower(0);
+                        robot.sliderRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        robot.sliderLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        //teoretic cele 2 lini de dedesubt sunt redundante petnru ca sunt
+                        //prezente si in RobotUtils in toate functiile de go to position
+                        robot.sliderRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        robot.sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        sliderstate = SliderState.AUTO;
+                    }
+                    break;
+            }
+            
 
 
 
