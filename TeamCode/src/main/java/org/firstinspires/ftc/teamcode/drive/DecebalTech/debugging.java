@@ -5,24 +5,26 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.RobotUtils;
 
 @TeleOp(name="debugging", group="Linear Opmode")
-
 @Config
-
-
 public class debugging extends LinearOpMode {
 
-    private DcMotor start;
+
+    private RobotUtils robot = new RobotUtils(hardwareMap);
+    public double pos1=0;
+    public double pos2=1;
+    public double pos3=0.5;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        start = hardwareMap.get(DcMotor.class,"1");
+
         waitForStart();
 
 
@@ -30,10 +32,25 @@ public class debugging extends LinearOpMode {
 
 
         while (opModeIsActive() && !isStopRequested()) {
-            start.setPower(1);
-            telemetry.addLine("what");
+
+            if(gamepad1.circle){
+                robot.axon_arm_left.setPosition(pos1);
+                robot.axon_arm_right.setPosition(pos1);
+            }
+            if(gamepad1.square){
+                robot.axon_arm_left.setPosition(pos2);
+                robot.axon_arm_right.setPosition(pos2);
+            }
+            if(gamepad1.cross){
+                robot.axon_rotire_cuva.setPosition(pos3);
+            }
+
+            telemetry.addData("axon stanga pos: ",robot.axon_arm_left.getPosition());
+            telemetry.addData("axon dreapta pos: ",robot.axon_arm_right.getPosition());
+            telemetry.addData("axon rotire cuva pos: ",robot.axon_rotire_cuva.getPosition());
             telemetry.update();
         }
+
     }
 
 
