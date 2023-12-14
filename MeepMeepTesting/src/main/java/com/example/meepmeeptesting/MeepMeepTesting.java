@@ -13,7 +13,7 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(900);
 
-        RoadRunnerBotEntity testpreload = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity testpreload_and_backboard = new DefaultBotBuilder(meepMeep)
                 .setConstraints(69, 69, Math.toRadians(80), Math.toRadians(80), 13.61)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(11,-60,Math.toRadians(90)))//0
 
@@ -33,10 +33,8 @@ public class MeepMeepTesting {
 
                 .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(testpreload)
-                //.addEntity(NewAutoBlue_CONCEPT)
-                //.addEntity(NewAutoBlue_CONCEPT2)
-
+                .addEntity(testpreload_and_backboard)
+                
                 .start();
 
     }
