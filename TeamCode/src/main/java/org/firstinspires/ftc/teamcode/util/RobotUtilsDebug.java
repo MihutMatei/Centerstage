@@ -61,9 +61,9 @@ public class RobotUtilsDebug {
         axon_arm_right.setPwmEnable();
         axon_rotire_cuva.setPwmEnable();
 
-        axon_arm_left.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        axon_arm_right.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        axon_rotire_cuva.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        axon_arm_left.setPwmRange(new PwmControl.PwmRange(505, 2495));
+        axon_arm_right.setPwmRange(new PwmControl.PwmRange(505, 2495));
+        axon_rotire_cuva.setPwmRange(new PwmControl.PwmRange(505, 2495));
     }
 
 

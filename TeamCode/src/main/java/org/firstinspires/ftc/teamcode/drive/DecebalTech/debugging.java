@@ -17,15 +17,15 @@ import org.firstinspires.ftc.teamcode.util.RobotUtilsDebug;
 public class debugging extends LinearOpMode {
 
 
-    private RobotUtilsDebug robot = new RobotUtilsDebug(hardwareMap);
-    public double pos1=0;
-    public double pos2=0;
-    public double pos3=0;
+    private RobotUtilsDebug robot;
+    public static double pos1=0.8;
+    public static double pos2=0.4;
+    public static double pos3=0.5;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-
+        robot = new RobotUtilsDebug(hardwareMap);
         waitForStart();
 
 
@@ -35,19 +35,21 @@ public class debugging extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
 
             if(gamepad1.circle){
-                robot.axon_arm_left.setPosition(pos1);
-//                robot.axon_arm_right.setPosition(pos1);
+                robot.axon_arm_left.setPosition(pos2);
+                robot.axon_arm_right.setPosition(pos2);
+                robot.axon_rotire_cuva.setPosition(pos2);
             }
             if(gamepad1.square){
-//                robot.axon_arm_left.setPosition(pos2);
-                robot.axon_arm_right.setPosition(pos2);
+                robot.axon_arm_left.setPosition(pos1);
+                robot.axon_arm_right.setPosition(pos1);
+                robot.axon_rotire_cuva.setPosition(pos1);
             }
-            if(gamepad1.cross){
+            if(gamepad1.triangle){
                 robot.axon_rotire_cuva.setPosition(pos3);
             }
 
 
-            telemetry.addData("axon stanga pos: ",robot.axon_arm_left.getPosition());
+            telemetry.addData("axon stanga pos:  ",robot.axon_arm_left.getPosition());
             telemetry.addData("axon dreapta pos: ",robot.axon_arm_right.getPosition());
             telemetry.addData("axon rotire cuva pos: ",robot.axon_rotire_cuva.getPosition());
 //            telemetry.addData("pozitie servo pixel ",robot.pixel_servo.getPosition());
