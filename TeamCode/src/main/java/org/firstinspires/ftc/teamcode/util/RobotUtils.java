@@ -25,7 +25,7 @@ public class RobotUtils {
     public ServoImplEx axon_arm_left;
     public ServoImplEx axon_arm_right;
     public ServoImplEx axon_rotire_cuva;
-    public Servo servo_cuva; //deschide cuva
+    public Servo pixel_servo; //deschide cuva
     public DcMotorEx motorIntake;
     public DcMotorEx sliderLeft;
     public DcMotorEx sliderRight;
@@ -56,7 +56,7 @@ public class RobotUtils {
         axon_arm_right=hardwareMap.get(ServoImplEx.class,"ax_brat_dr");
         axon_arm_left=hardwareMap.get(ServoImplEx.class,"ax_brat_st");
         axon_rotire_cuva=hardwareMap.get(ServoImplEx.class,"ax_r_cuva");
-        servo_cuva = hardwareMap.get(Servo.class,"srv_cuv");
+        pixel_servo = hardwareMap.get(Servo.class,"srv_cuv");
         motorIntake = hardwareMap.get(DcMotorEx.class,"m_intake");
         sliderLeft = hardwareMap.get(DcMotorEx.class, "s_left");
         sliderRight = hardwareMap.get(DcMotorEx.class, "s_right");
@@ -117,12 +117,12 @@ public class RobotUtils {
      * drop la un singur pixel, servo se duce la pozitia: x si dupa se intoarce ca sa tina al doile pixel daca exista
      * */
     public void pixel_drop_one() {
-        servo_cuva.setPosition(pixel_drop_pos);
+        pixel_servo.setPosition(pixel_drop_pos);
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         Runnable task = () -> {
             try {
-                servo_cuva.setPosition(pixel_reset_pos);
+                pixel_servo.setPosition(pixel_reset_pos);
             } catch (Exception e) {
                 telemetry.addData(e.getMessage()," am belit pula");
             } finally {
@@ -138,14 +138,14 @@ public class RobotUtils {
      * drop la toate pixels
      * */
     public void pixel_drop_all(){
-        servo_cuva.setPosition(pixel_drop_pos);
+        pixel_servo.setPosition(pixel_drop_pos);
 
     }
     /**
      * ridica servoul care tine in loc pixelii pentru a permite intake-ul
      * */
     public void pixel_reset(){
-        servo_cuva.setPosition(pixel_reset_pos);
+        pixel_servo.setPosition(pixel_reset_pos);
     }
     /**
      * pune cu 2 axoane bratul pe care se afla cuva in fata robotului pentru a apela dupa cuva_score()

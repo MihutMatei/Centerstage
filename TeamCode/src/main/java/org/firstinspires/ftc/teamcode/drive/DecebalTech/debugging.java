@@ -45,9 +45,15 @@ public class debugging extends LinearOpMode {
                 robot.axon_rotire_cuva.setPosition(pos3);
             }
 
+
             telemetry.addData("axon stanga pos: ",robot.axon_arm_left.getPosition());
             telemetry.addData("axon dreapta pos: ",robot.axon_arm_right.getPosition());
             telemetry.addData("axon rotire cuva pos: ",robot.axon_rotire_cuva.getPosition());
+            telemetry.addData("pozitie servo pixel ",robot.pixel_servo.getPosition());
+            telemetry.addData("slider stanga pos",robot.sliderLeft.getCurrentPosition());
+            telemetry.addData("slider dreapta pos",robot.sliderRight.getCurrentPosition());
+            telemetry.addData("slider stanga pos",robot.sliderLeft.getCurrentPosition());
+
             telemetry.update();
         }
 
