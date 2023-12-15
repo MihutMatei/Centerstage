@@ -43,6 +43,10 @@ public class Drive extends LinearOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.sliderRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.sliderLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.sliderLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.sliderRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         waitForStart();
 
         if (isStopRequested()) return;
@@ -91,8 +95,8 @@ public class Drive extends LinearOpMode {
                         chasisState = ChasisState.DRIVE;
                     }
             }
-            if(gamepad1.triangle) robot.drone_launch();
-            if(gamepad1.start) robot.drone_reset();
+//            if(gamepad1.triangle) robot.drone_launch();
+//            if(gamepad1.start) robot.drone_reset();
             if(gamepad1.dpad_up) robot.intake_on();
             if(gamepad1.dpad_down) robot.intake_off();
             if(gamepad1.dpad_left) robot.intake_reverse();
@@ -159,7 +163,7 @@ public class Drive extends LinearOpMode {
             }
             if(gamepad2.square) robot.pixel_drop_one();
 
-            
+
             drive.update();
 
         }

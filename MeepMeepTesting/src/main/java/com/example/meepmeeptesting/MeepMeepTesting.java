@@ -17,9 +17,9 @@ public class MeepMeepTesting {
                 .setConstraints(69, 69, Math.toRadians(80), Math.toRadians(80), 13.61)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(11,-60,Math.toRadians(90)))//0
 
-//                        .splineToLinearHeading(new Pose2d(11,-35,Math.toRadians(90)),Math.toRadians(90))
+                        .splineToLinearHeading(new Pose2d(11,-35,Math.toRadians(90)),Math.toRadians(90))
 //                        .splineToLinearHeading(new Pose2d(8,-32,Math.toRadians(155)),Math.toRadians(110))
-                        .splineToLinearHeading(new Pose2d(16,-34,Math.toRadians(15)),Math.toRadians(75))
+//                        .splineToLinearHeading(new Pose2d(16,-34,Math.toRadians(15)),Math.toRadians(75))
                                 .lineToLinearHeading(new Pose2d(20,-55,Math.toRadians(90)))
                                 .lineToLinearHeading(new Pose2d(35,-55,Math.toRadians(0)))
                                 .lineToLinearHeading(new Pose2d(45,-42,Math.toRadians(0)))
@@ -29,7 +29,7 @@ public class MeepMeepTesting {
 
 
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_KAI_LIGHT)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_LIGHT)
 
                 .setDarkMode(false)
                 .setBackgroundAlpha(0.95f)

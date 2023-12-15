@@ -26,19 +26,19 @@ public class RobotUtils {
     public ServoImplEx axon_arm_right;
     public ServoImplEx axon_rotire_cuva;
     public Servo pixel_servo; //deschide cuva
-    public Servo servo_drona;
+//    public Servo servo_drona;
     public DcMotorEx motorIntake;
     public DcMotorEx sliderLeft;
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public double cuva_score_pos=0;
-    public double cuva_return_pos=0;
+    public double cuva_score_pos=1;
+    public double cuva_return_pos=0.05;
     public double cuva_clearance_pos=0;
 
     public double arm_up_pos=0.8;
-    public double arm_down_pos=0.4;
-    public double arm_clearance_pos =0.3;
+    public double arm_down_pos=0.405;
+    public double arm_clearance_pos =0.375;
 
     public double drone_reset_pos=0;
     public double launch_pos=0;
@@ -64,7 +64,7 @@ public class RobotUtils {
         axon_arm_left=hardwareMap.get(ServoImplEx.class,"ax_brat_st");
         axon_rotire_cuva=hardwareMap.get(ServoImplEx.class,"ax_r_cuva");
         pixel_servo = hardwareMap.get(Servo.class,"srv_cuv");
-        servo_drona = hardwareMap.get(Servo.class,"srv_drona");
+//        servo_drona = hardwareMap.get(Servo.class,"srv_drona");
         motorIntake = hardwareMap.get(DcMotorEx.class,"m_intake");
         sliderLeft = hardwareMap.get(DcMotorEx.class, "s_left");
         sliderRight = hardwareMap.get(DcMotorEx.class, "s_right");
@@ -73,8 +73,8 @@ public class RobotUtils {
         axon_arm_right.setPwmEnable();
         axon_rotire_cuva.setPwmEnable();
 
-        axon_arm_left.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        axon_arm_right.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        axon_arm_left.setPwmRange(new PwmControl.PwmRange(505, 2495));
+        axon_arm_right.setPwmRange(new PwmControl.PwmRange(505, 2495));
         axon_rotire_cuva.setPwmRange(new PwmControl.PwmRange(500, 2500));
     }
     public void setSliderPositions(int position)
@@ -222,13 +222,13 @@ public class RobotUtils {
     /**
      * lanseaza drona ridicand un servo
      * */
-    public void drone_launch(){
-        servo_drona.setPosition(launch_pos);
-    }
+//    public void drone_launch(){
+//        servo_drona.setPosition(launch_pos);
+//    }
     /**
      * reseteaza servoul utilizat pentru lansarea dronei
      * */
-    public void drone_reset(){
-        servo_drona.setPosition(drone_reset_pos);
-    }
+//    public void drone_reset(){
+//        servo_drona.setPosition(drone_reset_pos);
+//    }
 }

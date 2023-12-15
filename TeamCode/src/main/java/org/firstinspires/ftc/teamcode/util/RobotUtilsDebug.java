@@ -20,7 +20,7 @@ public class RobotUtilsDebug {
     public ServoImplEx axon_arm_left;
     public ServoImplEx axon_arm_right;
     public ServoImplEx axon_rotire_cuva;
-//    public Servo pixel_servo; //deschide cuva
+    public Servo pixel_servo; //deschide cuva
 //    public DcMotorEx motorIntake;
 //    public DcMotorEx sliderLeft;
 //    public DcMotorEx sliderRight;
@@ -52,7 +52,7 @@ public class RobotUtilsDebug {
         axon_arm_right=hardwareMap.get(ServoImplEx.class,"ax_brat_dr");
         axon_arm_left=hardwareMap.get(ServoImplEx.class,"ax_brat_st");
         axon_rotire_cuva=hardwareMap.get(ServoImplEx.class,"ax_r_cuva");
-//        pixel_servo = hardwareMap.get(Servo.class,"srv_cuv");
+        pixel_servo = hardwareMap.get(Servo.class,"srv_cuv");
 //        motorIntake = hardwareMap.get(DcMotorEx.class,"m_intake");
 //        sliderLeft = hardwareMap.get(DcMotorEx.class, "s_left");
 //        sliderRight = hardwareMap.get(DcMotorEx.class, "s_right");
