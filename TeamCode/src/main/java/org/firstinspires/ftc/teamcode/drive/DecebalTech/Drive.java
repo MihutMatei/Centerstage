@@ -46,7 +46,8 @@ public class Drive extends LinearOpMode {
 
         robot.sliderLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.sliderRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        robot.cuva_return();
+        robot.arm_return();
         waitForStart();
 
         if (isStopRequested()) return;
@@ -116,15 +117,29 @@ public class Drive extends LinearOpMode {
                         robot.sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         sliderstate = SliderState.MANUAL;
                     }
+                    if (gamepad2.circle){
+                        robot.cuva_return();
+                        robot.arm_return();
+
+                    }
+                    if(gamepad2.cross){
+                        robot.cuva_score();
+                        robot.arm_extend();
+                    }
+                    if(gamepad2.square) robot.pixel_drop_one();
                     break;
                 case MANUAL:
                     if(gamepad2.left_stick_y>0.3){
-                        robot.sliderLeft.setPower(0.5);
-                        robot.sliderRight.setPower(-0.5);
+                        robot.sliderLeft.setPower(gamepad2.left_stick_y);
+                        robot.sliderRight.setPower(-gamepad2.left_stick_y);
                     }
-                    if(gamepad2.left_stick_y<-0.3){
-                        robot.sliderLeft.setPower(-0.5);
-                        robot.sliderRight.setPower(0.5);
+                   else if(gamepad2.left_stick_y<-0.3){
+                        robot.sliderLeft.setPower(gamepad2.left_stick_y);
+                        robot.sliderRight.setPower(-gamepad2.left_stick_y);
+                   }
+                   else{
+                        robot.sliderLeft.setPower(-0);
+                        robot.sliderRight.setPower(0);
                     }
                     if(gamepad2.triangle){
                         robot.sliderRight.setPower(0);
@@ -146,26 +161,42 @@ public class Drive extends LinearOpMode {
                         robot.sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                         sliderstate = SliderState.AUTO;
                     }
+                    if (gamepad2.circle){
+                        robot.cuva_return();
+                        robot.arm_return();
+
+                    }
+                    if(gamepad2.cross){
+                        robot.cuva_score();
+                        robot.arm_extend();
+                    }
+                    if(gamepad2.square) robot.pixel_drop_one();
                     break;
             }
 
-            if(robot.sliderRight.getCurrentPosition()>0 && robot.sliderRight.getCurrentPosition()<50) {
-                robot.cuva_return();
-                robot.arm_return();
-            }
-            if(robot.sliderRight.getCurrentPosition()>50 && robot.sliderRight.getCurrentPosition()<200) {
-                robot.cuva_clearance();
-                robot.arm_clearance();
-            }
-            if(robot.sliderRight.getCurrentPosition()>220 && robot.sliderRight.getCurrentPosition()<3000) {
-                robot.cuva_score();
-                robot.arm_extend();
-            }
-            if(gamepad2.square) robot.pixel_drop_one();
 
+//            if(robot.sliderRight.getCurrentPosition()>0 && robot.sliderRight.getCurrentPosition()<50) {
+//                    robot.cuva_return();
+//                    robot.arm_return();
+//
+//            }
+//            if(robot.sliderRight.getCurrentPosition()>50 && robot.sliderRight.getCurrentPosition()<1200) {
+//
+//                    robot.cuva_clearance();
+//                    robot.arm_clearance();
+//
+//            }
+//            if(robot.sliderRight.getCurrentPosition()>1400 && robot.sliderRight.getCurrentPosition()<3000) {
+//
+//                    robot.cuva_score();
+//                    robot.arm_extend();
+//
+//            }
+
+            telemetry.addLine(sliderstate.toString());
 
             drive.update();
-
+            telemetry.update();
         }
     }
 

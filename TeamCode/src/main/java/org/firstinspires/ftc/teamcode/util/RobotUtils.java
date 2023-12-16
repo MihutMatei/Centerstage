@@ -32,30 +32,30 @@ public class RobotUtils {
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public double cuva_score_pos=1;
-    public double cuva_return_pos=0.05;
-    public double cuva_clearance_pos=0;
+    public static double cuva_score_pos=1;
+    public static double cuva_return_pos=0.1;
+    public static double cuva_clearance_pos=0.1;
 
-    public double arm_up_pos=0.8;
-    public double arm_down_pos=0.405;
-    public double arm_clearance_pos =0.375;
+    public static double arm_up_pos=0.8;
+    public static double arm_down_pos=0.375;
+    public static double arm_clearance_pos =0.375;
 
-    public double drone_reset_pos=0;
-    public double launch_pos=0;
+    public static double drone_reset_pos=0;
+    public static double launch_pos=0;
 
-    public int slider_high_pos=0;
-    public int slider_mid_pos=0;
-    public int slider_low_pos=0;
-    public int slider_down_pos=0;
+    public static int slider_high_pos=3100;//3220 max
+    public static int slider_mid_pos=2500;
+    public static int slider_low_pos=1500;
+    public static int slider_down_pos=35;
 
-    public double pixel_drop_pos=0;
-    public double pixel_reset_pos=0;
-    public long pixel_delay=250;//ms
+    public static double pixel_drop_pos=0.59;
+    public static double pixel_reset_pos=0.485;
+    public static long pixel_delay=350;//ms
 
-    public double intake_on_pow=0;
-    public double intake_reverse_pow=0;
-    public double intake_off_pow=0;
-    public double slider_power=0;
+    public static double intake_on_pow=0.5;
+    public static double intake_reverse_pow=-0.5;
+    public static double intake_off_pow=0;
+    public static double slider_power=0.7;
 
 
     public RobotUtils(HardwareMap hardwareMap)
@@ -64,7 +64,6 @@ public class RobotUtils {
         axon_arm_left=hardwareMap.get(ServoImplEx.class,"ax_brat_st");
         axon_rotire_cuva=hardwareMap.get(ServoImplEx.class,"ax_r_cuva");
         pixel_servo = hardwareMap.get(Servo.class,"srv_cuv");
-//        servo_drona = hardwareMap.get(Servo.class,"srv_drona");
         motorIntake = hardwareMap.get(DcMotorEx.class,"m_intake");
         sliderLeft = hardwareMap.get(DcMotorEx.class, "s_left");
         sliderRight = hardwareMap.get(DcMotorEx.class, "s_right");
@@ -186,7 +185,7 @@ public class RobotUtils {
      * */
     public void arm_return(){
         axon_arm_left.setPosition(arm_down_pos);
-        axon_arm_left.setPosition(arm_down_pos);
+        axon_arm_right.setPosition(arm_down_pos);
     }
     public void go_sliders_high(){
         goSliderToPosition(slider_high_pos,slider_power);

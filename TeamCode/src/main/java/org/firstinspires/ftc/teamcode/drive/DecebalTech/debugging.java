@@ -32,14 +32,18 @@ public class debugging extends LinearOpMode {
     public static double pizel_1=0;
     public static double pizel_2=0;
 
+
+
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot = new RobotUtils(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         waitForStart();
-        robot.sliderRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.sliderRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.sliderLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         if (isStopRequested()) return;
 
@@ -85,38 +89,55 @@ public class debugging extends LinearOpMode {
                         chasisState = ChasisState.DRIVE;
                     }
             }
-            if(gamepad1.circle){
-                robot.axon_arm_left.setPosition(pos2);
-                robot.axon_arm_right.setPosition(pos2);
-//                robot.axon_rotire_cuva.setPosition(pos2);
-            }
-            if(gamepad1.square){
-                robot.axon_arm_left.setPosition(pos1);
-                robot.axon_arm_right.setPosition(pos1);
-//                robot.axon_rotire_cuva.setPosition(pos1);
-            }
-            if(gamepad1.triangle){
-                robot.axon_rotire_cuva.setPosition(pos3);
-            }
-            if(gamepad1.cross) {
-                robot.axon_rotire_cuva.setPosition(pos4);
-            }
-            if(gamepad1.dpad_down){
-                robot.pixel_servo.setPosition(pizel_1);
-            }
-            if(gamepad1.dpad_up){
-                robot.pixel_servo.setPosition(pizel_2);
-            }
-            if(gamepad2.x){
-                robot.motorIntake.setPower(0.5);
-            }
-            if(gamepad2.a){
-                robot.motorIntake.setPower(-0.5);
-            }
-            if(gamepad2.b){
-                robot.motorIntake.setPower(0);
-            }
+//            if(gamepad1.circle){
+//                robot.axon_arm_left.setPosition(pos2    );
+//                robot.axon_arm_right.setPosition(pos2);
+////                robot.axon_rotire_cuva.setPosition(pos2);
+//            }
+//            if(gamepad1.square){
+//                robot.axon_arm_left.setPosition(pos1);
+//                robot.axon_arm_right.setPosition(pos1);
+////                robot.axon_rotire_cuva.setPosition(pos1);
+//            }
+//            if(gamepad1.triangle){
+//                robot.axon_rotire_cuva.setPosition(pos3);
+//            }
+//            if(gamepad1.cross) {
+//                robot.axon_rotire_cuva.setPosition(pos4);
+//            }
+//            if(gamepad1.dpad_down){
+//                robot.pixel_servo.setPosition(pizel_1);
+//            }
+//            if(gamepad1.dpad_up){
+//                robot.pixel_servo.setPosition(pizel_2);
+//            }
+//            if(gamepad2.x){
+//                robot.motorIntake.setPower(0.5);
+//            }
+//            if(gamepad2.a){
+//                robot.motorIntake.setPower(-0.5);
+//            }
+//            if(gamepad2.b){
+//                robot.motorIntake.setPower(0);
+//            }
+                if(gamepad1.a) robot.pixel_drop_one();
 
+                if(gamepad1.b) robot.go_sliders_high();
+                if(gamepad1.y) robot.go_sliders_down();
+
+                if(gamepad1.dpad_up) robot.intake_on();
+                if(gamepad1.dpad_down) robot.intake_off();
+
+                if(gamepad1.dpad_left) robot.arm_extend();
+                if(gamepad1.dpad_right) robot.arm_return();
+
+                if(gamepad1.right_stick_button) robot.cuva_score();
+                if(gamepad1.left_stick_button) robot.cuva_return();
+
+                if(gamepad1.touchpad) {
+                    robot.axon_arm_right.setPosition(0.8);
+                    robot.axon_arm_left.setPosition(0.8);
+                }
             telemetry.addData("axon stanga pos:  ",robot.axon_arm_left.getPosition());
             telemetry.addData("axon dreapta pos: ",robot.axon_arm_right.getPosition());
             telemetry.addData("axon rotire cuva pos: ",robot.axon_rotire_cuva.getPosition());
