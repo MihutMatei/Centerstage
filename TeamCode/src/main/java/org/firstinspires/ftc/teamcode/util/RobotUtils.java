@@ -52,10 +52,10 @@ public class RobotUtils {
     public static double pixel_reset_pos=0.485;
     public static long pixel_delay=350;//ms
 
-    public static double intake_on_pow=0.5;
-    public static double intake_reverse_pow=-0.5;
+    public static double intake_on_pow=0.75;
+    public static double intake_reverse_pow=-0.75;
     public static double intake_off_pow=0;
-    public static double slider_power=0.7;
+    public static double slider_power=0.85;
 
 
     public RobotUtils(HardwareMap hardwareMap)
@@ -178,7 +178,7 @@ public class RobotUtils {
      * */
     public void arm_clearance(){
         axon_arm_left.setPosition(arm_clearance_pos);
-        axon_arm_right.setPosition(arm_up_pos);
+        axon_arm_right.setPosition(arm_clearance_pos);
     }
     /**
      * pune cu 2 axoane bratul pe care se afla cuva inapoi in robot, dupa ce a fost apelat cuva_return(), pentru a permite intake_ul

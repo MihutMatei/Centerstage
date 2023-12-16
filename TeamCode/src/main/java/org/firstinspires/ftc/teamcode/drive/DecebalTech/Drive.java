@@ -175,23 +175,18 @@ public class Drive extends LinearOpMode {
             }
 
 
-//            if(robot.sliderRight.getCurrentPosition()>0 && robot.sliderRight.getCurrentPosition()<50) {
-//                    robot.cuva_return();
-//                    robot.arm_return();
-//
-//            }
-//            if(robot.sliderRight.getCurrentPosition()>50 && robot.sliderRight.getCurrentPosition()<1200) {
-//
-//                    robot.cuva_clearance();
-//                    robot.arm_clearance();
-//
-//            }
-//            if(robot.sliderRight.getCurrentPosition()>1400 && robot.sliderRight.getCurrentPosition()<3000) {
-//
-//                    robot.cuva_score();
-//                    robot.arm_extend();
-//
-//            }
+            if(robot.sliderLeft.getCurrentPosition()>0 && robot.sliderLeft.getCurrentPosition()<1400) {
+                    robot.cuva_return();
+                    robot.arm_return();
+
+            }
+
+            if(robot.sliderLeft.getCurrentPosition()>1450 && robot.sliderLeft.getCurrentPosition()<3000) {
+
+                    robot.cuva_score();
+                    robot.arm_extend();
+
+            }
 
             telemetry.addLine(sliderstate.toString());
 
