@@ -3,17 +3,15 @@ package org.firstinspires.ftc.teamcode.util;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -21,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @Config
 public class RobotUtils {
-
+    public DistanceSensor distanceSensor;
     public ServoImplEx axon_arm_left;
     public ServoImplEx axon_arm_right;
     public ServoImplEx axon_rotire_cuva;
@@ -56,10 +54,21 @@ public class RobotUtils {
     public static double intake_reverse_pow=-0.75;
     public static double intake_off_pow=0;
     public static double slider_power=0.8;
+    //-------------------------------------------
+    public final double lenbrat = 6.4; //inch
+    public double htarget;//tba;
+    public final double sqrt2 = Math.sqrt(2);
+    public final double tanof30= Math.tan(Math.toRadians(30));
+
+    public  double distance;
+    public  double unghi;
+    public  double extindere;
+
 
 
     public RobotUtils(HardwareMap hardwareMap)
     {
+        distanceSensor = hardwareMap.get(DistanceSensor.class,"sens");
         axon_arm_right=hardwareMap.get(ServoImplEx.class,"ax_brat_dr");
         axon_arm_left=hardwareMap.get(ServoImplEx.class,"ax_brat_st");
         axon_rotire_cuva=hardwareMap.get(ServoImplEx.class,"ax_r_cuva");
@@ -75,6 +84,37 @@ public class RobotUtils {
         axon_arm_left.setPwmRange(new PwmControl.PwmRange(505, 2495));
         axon_arm_right.setPwmRange(new PwmControl.PwmRange(505, 2495));
         axon_rotire_cuva.setPwmRange(new PwmControl.PwmRange(500, 2500));
+
+//        double dist=distanceSensor.getDistance(DistanceUnit.INCH) + htarget*Math.tan(Math.toRadians(30));
+//        double angle = (Math.acos((htarget-dist)/lenbrat)-Math.toRadians(45))/sqrt2;
+//        double extension =sqrt2*(dist - Math.cos(angle)*lenbrat);
+
+    }
+    public void calcDist(double target){
+        double dist = this.distanceSensor.getDistance(DistanceUnit.INCH) + target*tanof30;
+
+        this.distance=dist;
+    }
+    public void calcAngle(double target){
+
+        double angle = (Math.acos((target-this.distance)/this.lenbrat)-Math.toRadians(45))/this.sqrt2;
+        this.unghi= angle;
+    }
+    public void calcExtension(){
+        double extension = sqrt2*(this.distance - Math.cos(this.unghi)*this.lenbrat);
+        this.extindere = extension;
+    }
+    public void update_reverse_kinematics(){
+        calcDist(this.htarget);
+        calcAngle(this.htarget);
+        calcExtension();
+    }
+    public double sliderticksToinches(int position_in_ticks){
+        return position_in_ticks/115.0;
+    }
+    public double inchesToSliderTicks(int inches){return inches*115.0;}
+    public void setHtarget(double target){
+        htarget=target;
     }
     public void setSliderPositions(int position)
     {
