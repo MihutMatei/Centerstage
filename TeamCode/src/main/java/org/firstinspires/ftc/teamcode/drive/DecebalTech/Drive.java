@@ -46,8 +46,7 @@ public class Drive extends LinearOpMode {
 
         robot.sliderLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.sliderRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.cuva_return();
-        robot.arm_return();
+
         waitForStart();
 
         if (isStopRequested()) return;
@@ -96,7 +95,7 @@ public class Drive extends LinearOpMode {
                         chasisState = ChasisState.DRIVE;
                     }
             }
-//            if(gamepad1.triangle) robot.drone_launch();
+            if(gamepad1.triangle) robot.drone_launch();
 //            if(gamepad1.start) robot.drone_reset();
             if(gamepad1.dpad_up) robot.intake_on();
             if(gamepad1.dpad_down) robot.intake_off();
@@ -117,6 +116,7 @@ public class Drive extends LinearOpMode {
                         robot.sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         sliderstate = SliderState.MANUAL;
                     }
+                    if(gamepad2.dpad_right) robot.pixel_servo.setPosition(0.52);
                     if (gamepad2.circle){
                         robot.cuva_return();
                         robot.arm_return();
@@ -127,6 +127,21 @@ public class Drive extends LinearOpMode {
                         robot.arm_extend();
                     }
                     if(gamepad2.square) robot.pixel_drop_one();
+                    if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
+                    if(robot.sliderLeft.getCurrentPosition()>0 && robot.sliderLeft.getCurrentPosition()<1550) {
+                        robot.cuva_return();
+                        robot.arm_return();
+
+                    }
+
+
+
+                    if(robot.sliderLeft.getCurrentPosition()>1550 && robot.sliderLeft.getCurrentPosition()<3000) {
+
+                        robot.cuva_score();
+                        robot.arm_extend();
+
+                    }
                     break;
                 case MANUAL:
                     if(gamepad2.left_stick_y>0.3){
@@ -171,22 +186,14 @@ public class Drive extends LinearOpMode {
                         robot.arm_extend();
                     }
                     if(gamepad2.square) robot.pixel_drop_one();
+
+                    if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
                     break;
             }
 
 
-            if(robot.sliderLeft.getCurrentPosition()>0 && robot.sliderLeft.getCurrentPosition()<1400) {
-                    robot.cuva_return();
-                    robot.arm_return();
 
-            }
-
-            if(robot.sliderLeft.getCurrentPosition()>1450 && robot.sliderLeft.getCurrentPosition()<3000) {
-
-                    robot.cuva_score();
-                    robot.arm_extend();
-
-            }
+            if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
 
             telemetry.addLine(sliderstate.toString());
 

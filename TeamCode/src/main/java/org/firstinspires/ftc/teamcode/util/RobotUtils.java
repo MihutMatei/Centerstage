@@ -26,36 +26,36 @@ public class RobotUtils {
     public ServoImplEx axon_arm_right;
     public ServoImplEx axon_rotire_cuva;
     public Servo pixel_servo; //deschide cuva
-//    public Servo servo_drona;
+    public Servo servo_drona;
     public DcMotorEx motorIntake;
     public DcMotorEx sliderLeft;
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public static double cuva_score_pos=1;
-    public static double cuva_return_pos=0.1;
-    public static double cuva_clearance_pos=0.1;
+    public static double cuva_score_pos=0.55;
+    public static double cuva_return_pos=0.4;
+    public static double cuva_clearance_pos=0.4;
 
-    public static double arm_up_pos=0.8;
-    public static double arm_down_pos=0.375;
-    public static double arm_clearance_pos =0.375;
+    public static double arm_up_pos=0.85;
+    public static double arm_down_pos=0.4;
+    public static double arm_clearance_pos =0.4;
 
     public static double drone_reset_pos=0;
-    public static double launch_pos=0;
+    public static double launch_pos=0.2;
 
     public static int slider_high_pos=3100;//3220 max
     public static int slider_mid_pos=2500;
-    public static int slider_low_pos=1500;
+    public static int slider_low_pos=1600;
     public static int slider_down_pos=35;
 
     public static double pixel_drop_pos=0.59;
     public static double pixel_reset_pos=0.485;
-    public static long pixel_delay=350;//ms
+    public static long pixel_delay=400;//ms
 
     public static double intake_on_pow=0.75;
     public static double intake_reverse_pow=-0.75;
     public static double intake_off_pow=0;
-    public static double slider_power=0.85;
+    public static double slider_power=0.8;
 
 
     public RobotUtils(HardwareMap hardwareMap)
@@ -67,7 +67,7 @@ public class RobotUtils {
         motorIntake = hardwareMap.get(DcMotorEx.class,"m_intake");
         sliderLeft = hardwareMap.get(DcMotorEx.class, "s_left");
         sliderRight = hardwareMap.get(DcMotorEx.class, "s_right");
-
+        servo_drona = hardwareMap.get(Servo.class,"drn");
         axon_arm_left.setPwmEnable();
         axon_arm_right.setPwmEnable();
         axon_rotire_cuva.setPwmEnable();
@@ -221,13 +221,13 @@ public class RobotUtils {
     /**
      * lanseaza drona ridicand un servo
      * */
-//    public void drone_launch(){
-//        servo_drona.setPosition(launch_pos);
-//    }
+    public void drone_launch(){
+        servo_drona.setPosition(launch_pos);
+    }
     /**
      * reseteaza servoul utilizat pentru lansarea dronei
      * */
-//    public void drone_reset(){
-//        servo_drona.setPosition(drone_reset_pos);
-//    }
+    public void drone_reset(){
+        servo_drona.setPosition(drone_reset_pos);
+    }
 }

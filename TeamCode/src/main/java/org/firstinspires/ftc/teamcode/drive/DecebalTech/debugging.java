@@ -25,7 +25,7 @@ public class debugging extends LinearOpMode {
     ChasisState chasisState =ChasisState.DRIVE;
     private RobotUtils robot;
     public static double pos1=0.8;
-    public static double pos2=0.405;
+    public static double pos2=0.52;
     public static double pos3=0.05;
     public static double pos4=1;
 
@@ -122,7 +122,10 @@ public class debugging extends LinearOpMode {
 //            }
                 if(gamepad1.a) robot.pixel_drop_one();
 
-                if(gamepad1.b) robot.go_sliders_high();
+                if(gamepad1.b) {
+                    robot.go_sliders_high();
+                    robot.pixel_servo.setPosition(pos2);
+                }
                 if(gamepad1.y) robot.go_sliders_down();
 
                 if(gamepad1.dpad_up) robot.intake_on();
@@ -134,10 +137,14 @@ public class debugging extends LinearOpMode {
                 if(gamepad1.right_stick_button) robot.cuva_score();
                 if(gamepad1.left_stick_button) robot.cuva_return();
 
-                if(gamepad1.touchpad) {
-                    robot.axon_arm_right.setPosition(0.8);
-                    robot.axon_arm_left.setPosition(0.8);
+                if(gamepad2.square) {
+                    robot.drone_launch();
                 }
+                if(gamepad2.cross){
+                    robot.drone_reset();
+                }
+
+
             telemetry.addData("axon stanga pos:  ",robot.axon_arm_left.getPosition());
             telemetry.addData("axon dreapta pos: ",robot.axon_arm_right.getPosition());
             telemetry.addData("axon rotire cuva pos: ",robot.axon_rotire_cuva.getPosition());
