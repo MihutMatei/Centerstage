@@ -199,6 +199,7 @@ public class ReverseKinematicsTest extends LinearOpMode {
 
             drive.update();
             telemetry.update();
+            robot.update_reverse_kinematics();
         }
     }
 
