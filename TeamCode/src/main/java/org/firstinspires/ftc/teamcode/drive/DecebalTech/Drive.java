@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.drive.DecebalTech;
 
-import android.transition.Slide;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.RobotUtils;
@@ -32,6 +29,8 @@ public class Drive extends LinearOpMode {
     private ChasisState chasisState = ChasisState.DRIVE;
 
     private SampleMecanumDrive drive;
+
+    private double loopTime=0;
 
 
 
@@ -196,6 +195,10 @@ public class Drive extends LinearOpMode {
             if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
 
             telemetry.addLine(sliderstate.toString());
+
+            double loop = System.nanoTime();
+            telemetry.addData("hz ", 1000000000 / (loop - loopTime));
+            loopTime = loop;
 
             drive.update();
             telemetry.update();
