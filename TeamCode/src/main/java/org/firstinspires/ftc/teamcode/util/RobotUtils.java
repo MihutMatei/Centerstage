@@ -3,17 +3,12 @@ package org.firstinspires.ftc.teamcode.util;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,13 +27,13 @@ public class RobotUtils {
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public static double cuva_score_pos=0.55;
-    public static double cuva_return_pos=0.4;
-    public static double cuva_clearance_pos=0.4;
+    public static double cuva_score_pos=0.9;
+    public static double cuva_return_pos=0.56;
+//    public static double cuva_clearance_pos=0.4;
 
     public static double arm_up_pos=0.85;
-    public static double arm_down_pos=0.4;
-    public static double arm_clearance_pos =0.4;
+    public static double arm_down_pos=0.38;
+//    public static double arm_clearance_pos =0.4;
 
     public static double drone_reset_pos=0;
     public static double launch_pos=0.2;
@@ -123,9 +118,9 @@ public class RobotUtils {
     /**
      * pune cuva in pozitia de clearance
      * */
-    public void cuva_clearance(){
-        axon_rotire_cuva.setPosition(cuva_clearance_pos);
-    }
+//    public void cuva_clearance(){
+//        axon_rotire_cuva.setPosition(cuva_clearance_pos);
+//    }
     /**
      * pune cuva in pozitia in care trebuie sa fie pentru intake
      * */
@@ -176,10 +171,10 @@ public class RobotUtils {
     /**
      * pune cu 2 axoane bratul pe care se afla cuva in pozitia de clearance
      * */
-    public void arm_clearance(){
-        axon_arm_left.setPosition(arm_clearance_pos);
-        axon_arm_right.setPosition(arm_clearance_pos);
-    }
+//    public void arm_clearance(){
+//        axon_arm_left.setPosition(arm_clearance_pos);
+//        axon_arm_right.setPosition(arm_clearance_pos);
+//    }
     /**
      * pune cu 2 axoane bratul pe care se afla cuva inapoi in robot, dupa ce a fost apelat cuva_return(), pentru a permite intake_ul
      * */

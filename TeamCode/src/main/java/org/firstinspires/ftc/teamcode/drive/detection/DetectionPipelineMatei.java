@@ -3,14 +3,11 @@ package org.firstinspires.ftc.teamcode.drive.detection;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-
-import java.util.ArrayList;
 
 public class DetectionPipelineMatei extends OpenCvPipeline {
     private static final Scalar BLUE = new Scalar(0, 0, 255);
@@ -40,9 +37,9 @@ public class DetectionPipelineMatei extends OpenCvPipeline {
 
     }
 
-    private Mat[]   allMats = new Mat[256];
-    private boolean[] validZones = new boolean[256];
-    private Point[] centerZones = new Point[256];
+    private Mat[]   allMats = new Mat[512];
+    private boolean[] validZones = new boolean[512];
+    private Point[] centerZones = new Point[512];
 
     @Override
     public void init(Mat input)

@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
+
+import java.util.List;
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -17,16 +21,23 @@ import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
  */
 @TeleOp(group = "drive")
 public class LocalizationTest extends LinearOpMode {
+    double loopTime=0,voltaGE=0;
+    private VoltageSensor batteryVoltageSensor;
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
+        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         TwoWheelTrackingLocalizer localizer = new TwoWheelTrackingLocalizer(hardwareMap,drive);
         waitForStart();
 
         while (!isStopRequested()) {
+            List<LynxModule> allHubs= hardwareMap.getAll(LynxModule.class);
+            for(LynxModule hub:allHubs){
+                hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+            }
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
@@ -41,6 +52,13 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("parallelEncoder", localizer.getparallelEncoderW());
             telemetry.addData("perpenducularEncoder", localizer.getperpendicularEncoderW());
             telemetry.addData("heading", Math.toDegrees(poseEstimate.getHeading()));
+
+            double loop = System.nanoTime();
+            telemetry.addData("hz ", 1000000000 / (loop - loopTime));
+            loopTime = loop;
+            double prevvoltage = batteryVoltageSensor.getVoltage();
+            telemetry.addData("voltage delta", voltaGE-prevvoltage);
+            voltaGE=prevvoltage;
             telemetry.update();
         }
     }
