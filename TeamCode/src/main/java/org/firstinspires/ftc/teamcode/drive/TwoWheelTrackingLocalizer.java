@@ -81,7 +81,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     }
     @Override
     public double getHeading() {
-        return drive.getRawExternalHeading();
+//        return drive.getRawExternalHeading();
+        return drive.getExternalHeading();
     }
 
     @Override

@@ -16,11 +16,11 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Red_Close", group="AUTINOMOUSGOOD")
+@Autonomous(name="Blue_close", group="AUTINOMOUSGOOD")
 @Config
 
 
-public class Red_close extends LinearOpMode {
+public class Blue_close extends LinearOpMode {
     private RobotUtils robot;
     OpenCvCamera webcam;
     DetectionPipelineMatei detectionPipeline;
@@ -65,62 +65,63 @@ public class Red_close extends LinearOpMode {
             }
         });
 //        sleep(2000);
-        Pose2d startPose = new Pose2d(11,-60,Math.toRadians(90));
+        Pose2d startPose = new Pose2d(11,60,Math.toRadians(-90));
         drive.setPoseEstimate(startPose);
         TrajectorySequence pune_preload_stanga = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(7,-32,Math.toRadians(155)),Math.toRadians(110))
+                .splineToLinearHeading(new Pose2d(5,35,Math.toRadians(-155)),Math.toRadians(-110))
                 .build();
         TrajectorySequence pune_preload_dreapta = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(12.5,-32,Math.toRadians(15)),Math.toRadians(75))
+                .splineToLinearHeading(new Pose2d(14,34,Math.toRadians(-15)),Math.toRadians(-75))
                 .build();
         TrajectorySequence pune_preload_mijloc = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(11,-30,Math.toRadians(90)),Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(11,30,Math.toRadians(-90)),Math.toRadians(-90))
                 .build();
 
         TrajectorySequence alignst = drive.trajectorySequenceBuilder(pune_preload_stanga.end())
-                .lineToLinearHeading(new Pose2d(20,-55,Math.toRadians(155)))
-                .lineToLinearHeading(new Pose2d(30,-55,Math.toRadians(0)))
-                .addTemporalMarker(0.3,()->{
+                .lineToLinearHeading(new Pose2d(20,55,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(35,55,Math.toRadians(0)))
+                .addTemporalMarker(0.2,()->{
                     robot.go_sliders_low_auto();
                 })
-
                 .build();
         TrajectorySequence align3 = drive.trajectorySequenceBuilder(pune_preload_dreapta.end())
-                .lineToLinearHeading(new Pose2d(9,-55,Math.toRadians(15)))
-                .lineToLinearHeading(new Pose2d(30,-55,Math.toRadians(0)))
-                .addTemporalMarker(0.3,()->{
+                .lineToLinearHeading(new Pose2d(20,55,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(35,55,Math.toRadians(0)))
+                .addTemporalMarker(0.2,()->{
                     robot.go_sliders_low_auto();
                 })
-
                 .build();
         TrajectorySequence align2 = drive.trajectorySequenceBuilder(pune_preload_mijloc.end())
-                .lineToLinearHeading(new Pose2d(20,-55,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(30,-55,Math.toRadians(0)))
-                .addTemporalMarker(0.3,()->{
+                .lineToLinearHeading(new Pose2d(20,55,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(30,55,Math.toRadians(0)))
+                .addTemporalMarker(0.2,()->{
                     robot.go_sliders_low_auto();
                 })
-
-
                 .build();
         TrajectorySequence score_preload_zone_left_u = drive.trajectorySequenceBuilder(alignst.end())
-                .lineToLinearHeading(new Pose2d(50,-28,Math.toRadians(0)),
+                .lineToLinearHeading(new Pose2d(43,42,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,Math.toRadians(180),DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
-                .addTemporalMarker(0.1,()->{
-                    robot.arm_extend();
-                })
-                .addTemporalMarker(0.25,()->{
-                    robot.cuva_score();
-
-                })
+//                        .addTemporalMarker(0.1,()->{
+//                            robot.arm_clearance();
+//                            robot.cuva_clearance();
+//                        })
+//                        .addTemporalMarker(0.15,()->{
+//                            robot.go_sliders_low();
+//                        })
+//                        .addTemporalMarker(0.25,()->{
+//                            robot.arm_extend();
+//                            robot.cuva_score();
+//                        })
                 .build();
         TrajectorySequence score_preload_zone_mid_m = drive.trajectorySequenceBuilder(align2.end())
-                .lineToLinearHeading(new Pose2d(50,-31,Math.toRadians(0)),
+                .lineToLinearHeading(new Pose2d(47.5,35,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,Math.toRadians(180),DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
-                .addTemporalMarker(0.1,()->{
+
+                .addTemporalMarker(0.2,()->{
                     robot.arm_extend();
                 })
                 .addTemporalMarker(0.25,()->{
@@ -130,40 +131,43 @@ public class Red_close extends LinearOpMode {
 
                 .build();
         TrajectorySequence score_preload_zone_right_d = drive.trajectorySequenceBuilder(align3.end())
-                .lineToLinearHeading(new Pose2d(50,-36,Math.toRadians(0)),
+                .lineToLinearHeading(new Pose2d(38,42,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,Math.toRadians(180),DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
-                .addTemporalMarker(0.1,()->{
-                    robot.arm_extend();
-                })
-                .addTemporalMarker(0.25,()->{
-                    robot.cuva_score();
-
-                })
+//                        .addTemporalMarker(0.1,()->{
+//                            robot.arm_clearance();
+//                            robot.cuva_clearance();
+//                        })
+//                        .addTemporalMarker(0.15,()->{
+//                            robot.go_sliders_low();
+//                        })
+//                        .addTemporalMarker(0.25,()->{
+//                            robot.arm_extend();
+//                            robot.cuva_score();
+//                        })
                 .build();
-        TrajectorySequence prepark = drive.trajectorySequenceBuilder(score_preload_zone_mid_m.end())
-                .lineToLinearHeading(new Pose2d(36,-30,Math.toRadians(0)),
+        TrajectorySequence preparkmid = drive.trajectorySequenceBuilder(score_preload_zone_mid_m.end())
+                .lineToLinearHeading(new Pose2d(36,32,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,30,DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
                 .build();
-        TrajectorySequence park = drive.trajectorySequenceBuilder(prepark.end())
-                .lineToLinearHeading(new Pose2d(52,-58,Math.toRadians(0)),
+        TrajectorySequence parkmid = drive.trajectorySequenceBuilder(preparkmid.end())
+                .lineToLinearHeading(new Pose2d(48,35,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,30,DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
                 .build();
-
 
 
         while (!isStarted() && !isStopRequested()) {
 
             double zoneleft = detectionPipeline.getZoneLuminosity(4);
             double zonemid = Math.min(Math.min(Math.min( detectionPipeline.getZoneLuminosity(64)
-                                                        ,detectionPipeline.getZoneLuminosity(54))
-                                                        ,detectionPipeline.getZoneLuminosity(74))
-                                                        ,detectionPipeline.getZoneLuminosity(44));
+                                    ,detectionPipeline.getZoneLuminosity(54))
+                            ,detectionPipeline.getZoneLuminosity(74))
+                    ,detectionPipeline.getZoneLuminosity(44));
 
 
             if (zoneleft<zonemid && zoneleft<95) zone = ZoneType.LEFT;
@@ -193,26 +197,24 @@ public class Red_close extends LinearOpMode {
         switch(zoneFinal){
             case LEFT:
                 drive.followTrajectorySequence(pune_preload_stanga);
-                sleep(300);
+                sleep(100);
 
                 drive.followTrajectorySequence(alignst);
-                sleep(1000);
+//                sleep(100);
 
-                drive.followTrajectorySequence(score_preload_zone_left_u);
-                sleep(1000);
-                robot.pixel_drop_one();
-                sleep(1000);
-                robot.pixel_drop_one();
-                sleep(1000);
-                drive.followTrajectorySequence(prepark);
+//                drive.followTrajectorySequence(score_preload_zone_left_u);
+
+//                robot.pixel_drop_one();
                 sleep(300);
-                robot.arm_return();
+//                robot.pixel_drop_one();
+                sleep(300);
+//                robot.cuva_return();
                 sleep(100);
-                robot.cuva_return();
-                sleep(500);
-                robot.go_sliders_down();
-                sleep(1000);
-                drive.followTrajectorySequence(park);
+//                robot.arm_return();
+                sleep(100);
+//                robot.go_sliders_down();
+                sleep(100);
+
                 break;
             case CENTER:
                 drive.followTrajectorySequence(pune_preload_mijloc);
@@ -227,37 +229,36 @@ public class Red_close extends LinearOpMode {
                 sleep(1000);
                 robot.pixel_drop_one();
                 sleep(1000);
-                drive.followTrajectorySequence(prepark);
+                drive.followTrajectorySequence(preparkmid);
                 sleep(300);
                 robot.arm_return();
-                sleep(100);
+                sleep(500);
                 robot.cuva_return();
                 sleep(500);
                 robot.go_sliders_down();
                 sleep(1000);
-                drive.followTrajectorySequence(park);
+
+                drive.followTrajectorySequence(parkmid);
 
                 break;
             case RIGHT:
                 drive.followTrajectorySequence(pune_preload_dreapta);
-                sleep(300);
-                drive.followTrajectorySequence(align3);
-                sleep(1000);
-                drive.followTrajectorySequence(score_preload_zone_right_d);
-                sleep(1000);
-                robot.pixel_drop_one();
-                sleep(1000);
-                robot.pixel_drop_one();
-                sleep(1000);
-                drive.followTrajectorySequence(prepark);
-                sleep(300);
-                robot.arm_return();
                 sleep(100);
-                robot.cuva_return();
-                sleep(500);
-                robot.go_sliders_down();
-                sleep(1000);
-                drive.followTrajectorySequence(park);
+
+                drive.followTrajectorySequence(align3);
+                sleep(100);
+
+//                drive.followTrajectorySequence(score_preload_zone_right_d);
+//                robot.pixel_drop_one();
+                sleep(300);
+//                robot.pixel_drop_one();
+                sleep(300);
+//                robot.cuva_return();
+                sleep(100);
+//                robot.arm_return();
+                sleep(100);
+//                robot.go_sliders_down();
+                sleep(100);
 
                 break;
         }

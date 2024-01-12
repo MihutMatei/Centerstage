@@ -5,11 +5,8 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.util.RobotUtils;
 import org.firstinspires.ftc.teamcode.util.RobotUtils;
 
 @TeleOp(name="debugging", group="Linear Opmode")
@@ -31,6 +28,8 @@ public class debugging extends LinearOpMode {
 
     public static double pizel_1=0;
     public static double pizel_2=0;
+
+    public static int sliderpp = 1100;
 
 
 
@@ -126,7 +125,7 @@ public class debugging extends LinearOpMode {
                     robot.go_sliders_high();
                     robot.pixel_servo.setPosition(pos2);
                 }
-                if(gamepad1.y) robot.go_sliders_down();
+                if(gamepad1.y) robot.goSliderToPosition(sliderpp,0.7);
 
                 if(gamepad1.dpad_up) robot.intake_on();
                 if(gamepad1.dpad_down) robot.intake_off();

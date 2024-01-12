@@ -27,12 +27,12 @@ public class RobotUtils {
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public static double cuva_score_pos=0.9;
-    public static double cuva_return_pos=0.56;
+    public static double cuva_score_pos=0.85;
+    public static double cuva_return_pos=0.46;
 //    public static double cuva_clearance_pos=0.4;
 
-    public static double arm_up_pos=0.85;
-    public static double arm_down_pos=0.38;
+    public static double arm_up_pos=0.82;
+    public static double arm_down_pos=0.376;
 //    public static double arm_clearance_pos =0.4;
 
     public static double drone_reset_pos=0;
@@ -40,7 +40,9 @@ public class RobotUtils {
 
     public static int slider_high_pos=3100;//3220 max
     public static int slider_mid_pos=2500;
-    public static int slider_low_pos=1600;
+    public static int slider_low_pos=1300;
+    public static int slider_low_auto_pos=900;
+
     public static int slider_down_pos=35;
 
     public static double pixel_drop_pos=0.59;
@@ -182,6 +184,7 @@ public class RobotUtils {
         axon_arm_left.setPosition(arm_down_pos);
         axon_arm_right.setPosition(arm_down_pos);
     }
+
     public void go_sliders_high(){
         goSliderToPosition(slider_high_pos,slider_power);
     }
@@ -190,6 +193,9 @@ public class RobotUtils {
     }
     public void go_sliders_low(){
         goSliderToPosition(slider_low_pos,slider_power);
+    }
+    public void go_sliders_low_auto(){
+        goSliderToPosition(slider_low_auto_pos,slider_power);
     }
     public void go_sliders_down(){
         goSliderToPosition(slider_down_pos,slider_power);
