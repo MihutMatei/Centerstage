@@ -27,8 +27,8 @@ public class RobotUtils {
     public DcMotorEx sliderRight;
 
     //-----------------------VALORI SI VARIABILE-------------------------
-    public static double cuva_score_pos=0.85;
-    public static double cuva_return_pos=0.46;
+    public static double cuva_score_pos=0.87;
+    public static double cuva_return_pos=0.45;
 //    public static double cuva_clearance_pos=0.4;
 
     public static double arm_up_pos=0.82;
@@ -40,7 +40,7 @@ public class RobotUtils {
 
     public static int slider_high_pos=3100;//3220 max
     public static int slider_mid_pos=2500;
-    public static int slider_low_pos=1300;
+    public static int slider_low_pos=1600;
     public static int slider_low_auto_pos=900;
 
     public static int slider_down_pos=35;

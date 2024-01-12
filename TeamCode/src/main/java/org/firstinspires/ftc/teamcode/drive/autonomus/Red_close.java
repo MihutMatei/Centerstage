@@ -68,10 +68,10 @@ public class Red_close extends LinearOpMode {
         Pose2d startPose = new Pose2d(11,-60,Math.toRadians(90));
         drive.setPoseEstimate(startPose);
         TrajectorySequence pune_preload_stanga = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(7,-32,Math.toRadians(155)),Math.toRadians(110))
+                .splineToLinearHeading(new Pose2d(7,-31,Math.toRadians(155)),Math.toRadians(110))
                 .build();
         TrajectorySequence pune_preload_dreapta = drive.trajectorySequenceBuilder(startPose)
-                .splineToLinearHeading(new Pose2d(12.5,-32,Math.toRadians(15)),Math.toRadians(75))
+                .splineToLinearHeading(new Pose2d(12.5,-31,Math.toRadians(15)),Math.toRadians(75))
                 .build();
         TrajectorySequence pune_preload_mijloc = drive.trajectorySequenceBuilder(startPose)
                 .splineToLinearHeading(new Pose2d(11,-30,Math.toRadians(90)),Math.toRadians(90))
@@ -103,7 +103,7 @@ public class Red_close extends LinearOpMode {
 
                 .build();
         TrajectorySequence score_preload_zone_left_u = drive.trajectorySequenceBuilder(alignst.end())
-                .lineToLinearHeading(new Pose2d(50,-28,Math.toRadians(0)),
+                .lineToLinearHeading(new Pose2d(50,-26.5,Math.toRadians(-1)),
                         SampleMecanumDrive.getVelocityConstraint(30,Math.toRadians(180),DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
