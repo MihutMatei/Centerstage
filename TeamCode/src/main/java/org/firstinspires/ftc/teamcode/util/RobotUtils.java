@@ -45,9 +45,9 @@ public class RobotUtils {
 
     public static int slider_down_pos=35;
 
-    public static double pixel_drop_pos=0.59;
+    public static double pixel_drop_pos=0.595;
     public static double pixel_reset_pos=0.485;
-    public static long pixel_delay=400;//ms
+    public static long pixel_delay=450;//ms
 
     public static double intake_on_pow=0.75;
     public static double intake_reverse_pow=-0.75;

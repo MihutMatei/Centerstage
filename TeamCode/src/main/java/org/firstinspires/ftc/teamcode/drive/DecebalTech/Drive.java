@@ -132,9 +132,6 @@ public class Drive extends LinearOpMode {
                         robot.arm_return();
 
                     }
-
-
-
                     if(robot.sliderLeft.getCurrentPosition()>1550 && robot.sliderLeft.getCurrentPosition()<3000) {
 
                         robot.cuva_score();

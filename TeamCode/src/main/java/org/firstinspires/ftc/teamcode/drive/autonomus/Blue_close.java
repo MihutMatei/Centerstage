@@ -149,7 +149,7 @@ public class Blue_close extends LinearOpMode {
                 )
                 .build();
         TrajectorySequence park = drive.trajectorySequenceBuilder(prepark.end())
-                .lineToLinearHeading(new Pose2d(52,58,Math.toRadians(0)),
+                .lineToLinearHeading(new Pose2d(52,55,Math.toRadians(0)),
                         SampleMecanumDrive.getVelocityConstraint(30,30,DriveConstants.TRACK_WIDTH)
                         ,SampleMecanumDrive.getAccelerationConstraint(30)
                 )
@@ -166,8 +166,8 @@ public class Blue_close extends LinearOpMode {
                     ,detectionPipeline.getZoneLuminosity(44));
 
 
-            if (zoneleft<zonemid && zoneleft<80) zone = ZoneType.LEFT;
-            else if (zonemid < zoneleft && zonemid<80)zone = ZoneType.CENTER;
+            if (zoneleft<zonemid && zoneleft<78) zone = ZoneType.LEFT;
+            else if (zonemid < zoneleft && zonemid<78)zone = ZoneType.CENTER;
             else zone = ZoneType.RIGHT;
 
 
