@@ -94,11 +94,16 @@ public class Drive extends LinearOpMode {
                         chasisState = ChasisState.DRIVE;
                     }
             }
+
+
+
+
             if(gamepad1.triangle) robot.drone_launch();
 //            if(gamepad1.start) robot.drone_reset();
             if(gamepad1.dpad_up) robot.intake_on();
             if(gamepad1.dpad_down) robot.intake_off();
             if(gamepad1.dpad_left) robot.intake_reverse();
+
 
             /*-------------P2 CONTROLS-------------------------------------*/
 
@@ -114,29 +119,6 @@ public class Drive extends LinearOpMode {
                         robot.sliderRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         robot.sliderLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                         sliderstate = SliderState.MANUAL;
-                    }
-                    if(gamepad2.dpad_right) robot.pixel_servo.setPosition(0.52);
-                    if (gamepad2.circle){
-                        robot.cuva_return();
-                        robot.arm_return();
-
-                    }
-                    if(gamepad2.cross){
-                        robot.cuva_score();
-                        robot.arm_extend();
-                    }
-                    if(gamepad2.square) robot.pixel_drop_one();
-                    if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
-                    if(robot.sliderLeft.getCurrentPosition()>0 && robot.sliderLeft.getCurrentPosition()<1550) {
-                        robot.cuva_return();
-                        robot.arm_return();
-
-                    }
-                    if(robot.sliderLeft.getCurrentPosition()>1550 && robot.sliderLeft.getCurrentPosition()<3000) {
-
-                        robot.cuva_score();
-                        robot.arm_extend();
-
                     }
                     break;
                 case MANUAL:
@@ -172,24 +154,12 @@ public class Drive extends LinearOpMode {
                         robot.sliderLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                         sliderstate = SliderState.AUTO;
                     }
-                    if (gamepad2.circle){
-                        robot.cuva_return();
-                        robot.arm_return();
 
-                    }
-                    if(gamepad2.cross){
-                        robot.cuva_score();
-                        robot.arm_extend();
-                    }
-                    if(gamepad2.square) robot.pixel_drop_one();
-
-                    if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
                     break;
             }
 
 
 
-            if(gamepad2.right_bumper) robot.pixel_servo.setPosition(0.52);
 
             telemetry.addLine(sliderstate.toString());
 
